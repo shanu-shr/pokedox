@@ -10,6 +10,7 @@ import (
 func main() {
 
 	registerCommands()
+	initializeConfig()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -19,7 +20,7 @@ func main() {
 
 			command, ok := supportedCommands[words[0]]
 			if ok {
-				command.callback()
+				command.callback(&cfg)
 			} else {
 				fmt.Println("Unknown command")
 			}
@@ -30,4 +31,13 @@ func main() {
 func cleanInput(text string) []string {
 	data := strings.Fields(strings.ToLower(text))
 	return data
+}
+
+var cfg Config
+
+func initializeConfig() {
+	cfg = Config{
+		Next:     "",
+		previous: "",
+	}
 }
