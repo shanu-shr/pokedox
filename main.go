@@ -7,30 +7,6 @@ import (
 	"strings"
 )
 
-type cliCommand struct {
-	name        string
-	description string
-	callback    func() error
-}
-
-var supportedCommands map[string]cliCommand
-
-func registerCommands() {
-	supportedCommands = make(map[string]cliCommand)
-
-	supportedCommands["exit"] = cliCommand{
-		name:        "exit",
-		description: "Exit the pokedox",
-		callback:    commandExit,
-	}
-
-	supportedCommands["help"] = cliCommand{
-		name:        "help",
-		description: "Displays a help message",
-		callback:    helpHandler,
-	}
-}
-
 func main() {
 
 	registerCommands()
@@ -49,22 +25,6 @@ func main() {
 			}
 		}
 	}
-}
-
-func commandExit() error {
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
-}
-
-func helpHandler() error {
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage:")
-
-	for _, item := range supportedCommands {
-		fmt.Println(item.description)
-	}
-	return nil
 }
 
 func cleanInput(text string) []string {
